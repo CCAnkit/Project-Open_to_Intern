@@ -14,30 +14,31 @@ const isValidDetails = function(details){
 const createInternName = async function(req, res) {
     try{
         const details = req.body
+        const {name, email, mobile} = details
+
         const id = details.collegeId
 
         if(!isValidDetails(details)){
             res.status(400).send({status:false, msg:"Please provide Intern Details"})  //Validate the value that is provided by the Client.
         }
-        const {name, email, mobile} = details
         if (!isValidValue(name)){
             return res.status(400).send({status:false, msg:"Please provide Name"})   //name is mandory 
         }
         if (!isValidValue(email)){
             return res.status(400).send({status:false, msg:"Please provide Email Address"})   //email is mandory
         }
-        if (!isValidValue(mobile)){
-            return res.status(400).send({status:false, msg:"Please provide Mobile number"})    //Mobile is mandory
-        }
         if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
             return res.status(400).send({status:false,msg:"Please provide valid Email Address"})    //Regex for checking the valid email format 
+        }
+        if (!isValidValue(mobile)){
+            return res.status(400).send({status:false, msg:"Please provide Mobile number"})    //Mobile is mandory
         }
         if(!/^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/.test(mobile)){
             return res.status(400).send({status:false,msg:"Please provide valid Mobile number"})    //Regex for checking the valid mobile format 
         }
         const validateId = await authorModel.findById(id)   //finding by the collegeId
         if(!validateId) {
-            return res.status(400).send({status:false, msg:"CollegeId is invalid"})    //check valid collegeId
+            return res.status(400).send({status:false, msg:"Invalid College Id"})    //check valid collegeId
         }
         const emailUsed = await internModel.findOne({email})
         if(emailUsed){

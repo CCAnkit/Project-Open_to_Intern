@@ -15,17 +15,17 @@ const createCollegeName = async function(req, res) {
     try{
         const details = req.body
         if(!isValidDetails(details)){
-            res.status(400).send({status:false, msg:"Please provide college details"})  //Validate the value that is provided by the Client.
+            res.status(400).send({status:false, msg:"Please provide College details"})  //Validate the value that is provided by the Client.
         }
         const {name, fullName, logoLink} = details
         if (!isValidValue(name)){
-            return res.status(400).send({status:false, msg:"Please provide name"})   //name is mandory 
+            return res.status(400).send({status:false, msg:"Please provide Name"})   //name is mandory 
         }
         if (!isValidValue(fullName)){
-            return res.status(400).send({status:false, msg:"Please provide fullName"})   //fullName is mandory
+            return res.status(400).send({status:false, msg:"Please provide FullName"})   //fullName is mandory
         }
         if (!isValidValue(logoLink)){
-            return res.status(400).send({status:false, msg:"Please provide Logo"})    //logoLink is mandory
+            return res.status(400).send({status:false, msg:"Please provide LogoLink"})    //logoLink is mandory
         }
         // if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
         //     return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 

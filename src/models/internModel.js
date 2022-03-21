@@ -20,7 +20,7 @@ const internSchema = new mongoose.Schema({
         }
     },
     "mobile": {
-        type : Number,
+        type : String,
         required : 'Number is required',
         unique : true,
         trim : true,
