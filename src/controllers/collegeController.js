@@ -45,7 +45,7 @@ const createCollegeName = async function(req, res) {
 
 const getCollegeDetails = async function(req, res) {
     try{
-
+        
     }
     catch(err) {
         console.log(err)
