@@ -27,9 +27,9 @@ const createCollegeName = async function(req, res) {
         if (!isValidValue(logoLink)){
             return res.status(400).send({status:false, msg:"Please provide Logo"})    //logoLink is mandory
         }
-        if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
-            return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 
-        }
+        // if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
+        //     return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 
+        // }
         const alreadyUsed = await collegeModel.findOne({fullName})
         if(alreadyUsed){
             return res.status(400).send({status:false, msg:`${fullName} College is already exists`})   //checking the fullName is already exist or not.
@@ -45,7 +45,7 @@ const createCollegeName = async function(req, res) {
 
 const getCollegeDetails = async function(req, res) {
     try{
-        
+
     }
     catch(err) {
         console.log(err)

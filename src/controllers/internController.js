@@ -19,7 +19,7 @@ const createInternName = async function(req, res) {
         if(!isValidDetails(details)){
             res.status(400).send({status:false, msg:"Please provide Intern Details"})  //Validate the value that is provided by the Client.
         }
-        const {name, email, mobile, collegeId} = details
+        const {name, email, mobile} = details
         if (!isValidValue(name)){
             return res.status(400).send({status:false, msg:"Please provide Name"})   //name is mandory 
         }

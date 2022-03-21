@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use("/functionup/", route);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://CCAnkit:CCAnkit09@clusternew.gds9x.mongodb.net/groupXDatabase", {
+mongoose.connect("mongodb+srv://CCAnkit:CCAnkit09@clusternew.gds9x.mongodb.net/group51Database", {
     useNewUrlParser: true})
 .then(() => console.log('MongoDb is connected'))
 .catch(err => console.log('Connection error'))
