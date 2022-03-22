@@ -2,6 +2,7 @@ const collegeModel = require("../models/collegeModel.js");
 const internModel = require("../models/internModel.js");
 
 
+// validation
 const isValidValue = function(value){   //it should not be like undefined or null.
     if (typeof value === 'undefined' || value === null) return false   //if the value is undefined or null it will return false.
     if (typeof value === 'string' && value.trim().length === 0) return false   //if the value is string & length is 0 it will return false.
@@ -12,6 +13,7 @@ const isValidDetails = function(details){
     return Object.keys(details).length > 0
 }
 
+// create collegeName
 const createCollegeName = async function(req, res) {
     try{
         const details = req.body
@@ -45,14 +47,11 @@ const createCollegeName = async function(req, res) {
 };
 
 
-
+// create internName
 const createInternName = async function(req, res) {
     try{
         const details = req.body
         const {name, email, mobile} = details
-
-        const id = details.collegeId
-
         if(!isValidDetails(details)){
             res.status(400).send({status:false, msg:"Please provide Intern Details"})  //Validate the value that is provided by the Client.
         }
@@ -71,14 +70,9 @@ const createInternName = async function(req, res) {
         if(!/^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/.test(mobile)){
             return res.status(400).send({status:false,msg:"Please provide valid Mobile number"})    //Regex for checking the valid mobile format
         }
-        // if (!isValidValue(collegeName)){
-        //     return res.status(400).send({status:false, msg:"Please provide College Name"})    //CollegeName is mandory
-        // }
-        // const validateCollegeName = await internModel.findOne({collegeName})
-        // if(validateCollegeName){
-        //     return res.status(400).send({status:false, msg:`${collegeName} is already exists`})   //checking the CollegeName is already exist or not.
-        // }
-        const validateId = await internModel.findById({id})   //finding by the collegeId
+        const id = details.collegeId
+
+        const validateId = await collegeModel.findById(id)   //finding by the collegeId
         if(!validateId) {
             return res.status(400).send({status:false, msg:"Invalid College Id"})    //check valid collegeId
         }
@@ -99,9 +93,27 @@ const createInternName = async function(req, res) {
     }
 };
 
+
+// get CollegeDetails
 const getCollegeDetails = async function(req, res) {
     try{
-
+        const collegeName = req.query.collegeName
+        if(!collegeName) {
+            return res.status(400).send({status: false, msg: "Please provide college name."})}
+        const findCollege = await collegeModel.findOne({name: collegeName, isDeleted: false})
+        if(!findCollege) {
+            return res.status(404).send({status:false, msg: "No college found with the provided college name."})}
+        const collegeId = findCollege._id
+        const allInterns = await internModel.find({collegeId: collegeId}).select({name: 1,email: 1, mobile: 1})
+        if(allInterns.length == 0) {
+            return res.status().send({status: false, msg: "No Intern found with the provided college name."})}
+        const finalCollegeData = {
+            name : findCollege.name,
+            fullName : findCollege.fullName,
+            interest : allInterns
+        }
+        console.log(finalCollegeData)
+        res.status(200).send({status: true, data: finalCollegeData})
     }
     catch(err) {
         console.log(err)

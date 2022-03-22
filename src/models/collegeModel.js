@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// fullName: {mandatory, example `Indian Institute of Technology, Hyderabad`}, 
-
 const collegeSchema = new mongoose.Schema({
     "name": {
         type : String,

@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const internSchema = new mongoose.Schema({
-    "name": {
+    name : {
         type : String,
         required : 'Name is required',
         trim : true
     },
-    "email": {
+    email : {
         type : String, 
         required : 'email is required',
         unique : true,
@@ -19,7 +19,7 @@ const internSchema = new mongoose.Schema({
             }, message:'Email is invalid, Please check your Email address.', isAsync:false
         }
     },
-    "mobile": {
+    mobile : {
         type : String,
         required : 'Number is required',
         unique : true,
@@ -30,11 +30,11 @@ const internSchema = new mongoose.Schema({
             }, message: 'Mobile number is invalid, Please check your Mobile number.', isAsync:false
         }
     },
-    "collegeId": {
+    collegeId: {
         type : ObjectId,
         refs : "collegeName"
     },
-    "isDeleted": {
+    isDeleted : {
         type : Boolean,
         default : false
     }
