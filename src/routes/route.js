@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const collegeController = require("../controllers/collegeController.js");
-const internController = require("../controllers/internController.js");
+const controller = require("../controllers/controller.js");
 
-router.post("/colleges", collegeController.createCollegeName);   //createCollegeName
 
-router.post("/interns", internController.createInternName);   //createInternName
+router.post("/colleges", controller.createCollegeName);   //createCollegeName
 
-router.get("/collegeDetails", collegeController.getCollegeDetails);   //getCollegeDetails
+router.post("/interns", controller.createInternName);   //createInternName
+
+router.get("/collegeDetails", controller.getCollegeDetails);   //getCollegeDetails
 
 
 module.exports = router;
