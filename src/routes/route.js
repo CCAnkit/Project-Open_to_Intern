@@ -3,9 +3,9 @@ const router = express.Router();
 const controller = require("../controllers/mainController.js");
 
 
-router.post("/colleges", controller.createCollegeName);   //createCollegeName
+router.post("/colleges", controller.createCollege);   //createCollegeName
 
-router.post("/interns", controller.createInternName);   //createInternName
+router.post("/interns", controller.createIntern);   //createInternName
 
 router.get("/collegeDetails", controller.getCollegeDetails);   //getCollegeDetails
 
