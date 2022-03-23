@@ -18,26 +18,26 @@ const createCollege = async function(req, res) {
     try{
         const details = req.body
         if(!isValidDetails(details)){
-            res.status(400).send({status:false, msg:"Please provide College details"})  //Validate the value that is provided by the Client.
+            res.status(400).send({status:false, msg:"Please provide the College details"})  //Validate the value that is provided by the Client.
         }
         const {name, fullName} = details
         const logoLink = details.logoLink
 
         if (!isValidValue(name)){
-            return res.status(400).send({status:false, msg:"Please provide Name"})   //name is mandory 
+            return res.status(404).send({status:false, msg:"Please provide the Name"})   //name is mandory 
         }
         if (!isValidValue(fullName)){
-            return res.status(400).send({status:false, msg:"Please provide FullName"})   //fullName is mandory
+            return res.status(404).send({status:false, msg:"Please provide the FullName"})   //fullName is mandory
         }
         if (!isValidValue(logoLink)){
-            return res.status(400).send({status:false, msg:"Please provide the LogoLink"})    //logoLink is mandory
+            return res.status(404).send({status:false, msg:"Please provide the LogoLink"})    //logoLink is mandory
         }
         // if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
         //     return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 
         // }
         const alreadyUsed = await collegeModel.findOne({fullName})
         if(alreadyUsed){
-            return res.status(400).send({status:false, msg:`${fullName} College is already exists`})   //checking the fullName is already exist or not.
+            return res.status(400).send({status:false, msg:`${fullName} is already exists`})   //checking the fullName is already exist or not.
         }
         const data = await collegeModel.create(details)  //creating the college details
         res.status(201).send({status: true, msg : "College details saved successfully", data:data})
@@ -84,11 +84,11 @@ const createIntern = async function(req, res) {
         }
         const emailUsed = await internModel.findOne({email})
         if(emailUsed){
-            return res.status(400).send({status:false, msg:`${email} Email Address is already exists`})   //checking the email address is already exist or not.
+            return res.status(400).send({status:false, msg:`${email} is already exists`})   //checking the email address is already exist or not.
         }
         const mobileUsed = await internModel.findOne({mobile})
         if(mobileUsed){
-            return res.status(400).send({status:false, msg:`${mobile} Mobile number is already exists`})   //checking the mobile number is already exist or not.
+            return res.status(400).send({status:false, msg:`${mobile} is already exists`})   //checking the mobile number is already exist or not.
         }
         const data = await internModel.create(details)  //creating the intern details
             res.status(201).send({status: true, msg : "College details saved successfully", data:data})
@@ -105,7 +105,7 @@ const getCollegeDetails = async function(req, res) {
     try{
         const collegeName = req.query.collegeName
         if(!collegeName) {
-            return res.status(400).send({status: false, msg: "Please provide college name."})   //Validating the College Name
+            return res.status(400).send({status: false, msg: "Please provide the college name."})   //Validating the College Name
         }
         const findCollege = await collegeModel.findOne({name: collegeName, isDeleted: false})    //finding the college name in collegeModel with the key name as "name"
         if(!findCollege) {    //if unable to find the CollegeName in collegeModel
