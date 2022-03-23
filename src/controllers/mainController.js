@@ -20,7 +20,9 @@ const createCollege = async function(req, res) {
         if(!isValidDetails(details)){
             res.status(400).send({status:false, msg:"Please provide College details"})  //Validate the value that is provided by the Client.
         }
-        const {name, fullName, logoLink} = details
+        const {name, fullName} = details
+        const logoLink = details.logoLink
+
         if (!isValidValue(name)){
             return res.status(400).send({status:false, msg:"Please provide Name"})   //name is mandory 
         }
@@ -30,6 +32,9 @@ const createCollege = async function(req, res) {
         if (!isValidValue(logoLink)){
             return res.status(400).send({status:false, msg:"Please provide LogoLink"})    //logoLink is mandory
         }
+        // if (!logoLink)
+        // {return res.status(400).send({status:false, msg:"Please provide the logo link."})}
+        
         // if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
         //     return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 
         // }
@@ -89,7 +94,7 @@ const createIntern = async function(req, res) {
             return res.status(400).send({status:false, msg:`${mobile} Mobile number is already exists`})   //checking the mobile number is already exist or not.
         }
         const data = await internModel.create(details)  //creating the intern details
-        res.status(201).send({status: true, msg : "College details saved successfully", data:data})
+            res.status(201).send({status: true, msg : "College details saved successfully", data:data})
     }
     catch(err) {
         console.log(err)
@@ -109,7 +114,7 @@ const getCollegeDetails = async function(req, res) {
         if(!findCollege) {    //if unable to find the CollegeName in collegeModel
             return res.status(404).send({status:false, msg: "No college found with the provided college name."})
         }
-        const collegeId = findCollege._id    //
+        const collegeId = findCollege._id    
         const allInterns = await internModel.find({collegeId: collegeId}).select({name: 1,email: 1, mobile: 1})   //finding the Interns that they applied for the same college
         if(allInterns.length == 0) {   //if unable to find the interns in the same college
             return res.status(404).send({status: false, msg: "No Intern found with the provided college name."})
