@@ -30,11 +30,8 @@ const createCollege = async function(req, res) {
             return res.status(400).send({status:false, msg:"Please provide FullName"})   //fullName is mandory
         }
         if (!isValidValue(logoLink)){
-            return res.status(400).send({status:false, msg:"Please provide LogoLink"})    //logoLink is mandory
+            return res.status(400).send({status:false, msg:"Please provide the LogoLink"})    //logoLink is mandory
         }
-        // if (!logoLink)
-        // {return res.status(400).send({status:false, msg:"Please provide the logo link."})}
-        
         // if(!/?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/.test(logoLink)){
         //     return res.status(400).send({status:false,msg:"Please provide valid URL"})    //Regex for checking the valid UrL format 
         // }
@@ -122,7 +119,8 @@ const getCollegeDetails = async function(req, res) {
         const finalCollegeData = {    //store the data in the Object
             name : findCollege.name,  
             fullName : findCollege.fullName,
-            interest : allInterns
+            interest : allInterns,
+            logoLink : findCollege.logoLink
         }
         console.log(finalCollegeData)
         res.status(200).send({status: true, data: finalCollegeData})
